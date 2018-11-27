@@ -10,6 +10,7 @@ import com.alirezaafkar.sundatepicker.R;
 import com.alirezaafkar.sundatepicker.components.JDF;
 import com.alirezaafkar.sundatepicker.components.SquareTextView;
 import com.alirezaafkar.sundatepicker.interfaces.DateInterface;
+import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 import java.text.ParseException;
 
@@ -89,7 +90,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
         holder.mTextView.setSelected(selected);
         holder.mTextView.setEnabled(clickable);
         holder.mTextView.setChecked(checked);
-        holder.mTextView.setText(text);
+        holder.mTextView.setText(TextAndFontUtility.toPersianNumber(text));
     }
 
     private boolean isSelectableDay(int day) {

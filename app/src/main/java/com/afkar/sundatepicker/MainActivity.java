@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements
                 .id(id)
                 .minDate(minDate)
                 .maxDate(maxDate)
+                .nightMode(true)
                 .setRetainInstance(true);
 
         if (v.getId() == R.id.startDate)

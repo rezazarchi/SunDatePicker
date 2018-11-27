@@ -1,6 +1,7 @@
 package com.alirezaafkar.sundatepicker;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alirezaafkar.sundatepicker.components.DateItem;
@@ -21,9 +23,13 @@ import com.alirezaafkar.sundatepicker.fragments.MonthFragment;
 import com.alirezaafkar.sundatepicker.fragments.YearFragment;
 import com.alirezaafkar.sundatepicker.interfaces.DateInterface;
 import com.alirezaafkar.sundatepicker.interfaces.DateSetListener;
+import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import static com.alirezaafkar.sundatepicker.utils.TextAndFontUtility.setFonts;
 
 /**
  * Created by Alireza Afkar on 2/5/16 AD.
@@ -50,8 +56,10 @@ public class DatePicker extends DialogFragment
         private int theme;
 
         private int id;
+        private boolean isNightMode;
         private DateItem dateItem;
         private boolean retainInstance;
+        private Typeface typeFace;
 
         public Builder() {
             dateItem = new DateItem();
@@ -60,6 +68,18 @@ public class DatePicker extends DialogFragment
 
         public Builder id(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder nightMode(boolean isNightMode) {
+            this.isNightMode = isNightMode;
+            if (isNightMode)
+                theme = R.style.DialogThemeNight;
+            return this;
+        }
+
+        public Builder typeFace(Typeface typeface) {
+            this.typeFace = typeface;
             return this;
         }
 
@@ -188,7 +208,7 @@ public class DatePicker extends DialogFragment
         mToday.setOnClickListener(this);
         view.findViewById(R.id.done).setOnClickListener(this);
         view.findViewById(R.id.cancel).setOnClickListener(this);
-
+        setFonts(view, mBuilder.typeFace);
         return view;
     }
 
@@ -214,13 +234,13 @@ public class DatePicker extends DialogFragment
     private void showMonths() {
         mDate.setSelected(true);
         mYear.setSelected(false);
-        switchFragment(MonthFragment.newInstance(DatePicker.this));
+        switchFragment(MonthFragment.newInstance(DatePicker.this, mBuilder.typeFace));
     }
 
     private void showYears() {
         mYear.setSelected(true);
         mDate.setSelected(false);
-        switchFragment(YearFragment.newInstance(DatePicker.this));
+        switchFragment(YearFragment.newInstance(DatePicker.this, mBuilder.typeFace));
     }
 
     private void onDone() {
@@ -239,9 +259,9 @@ public class DatePicker extends DialogFragment
 
     public void updateDisplay() {
         mToday.setVisibility(isToday() ? View.GONE : View.VISIBLE);
-        mYear.setText(String.valueOf(mDateItem.getYear()));
-        mDate.setText(getString(R.string.date_placeholder,
-                getDayName(), mDateItem.getDay(), getMonthName()));
+        mYear.setText(TextAndFontUtility.toPersianNumber(String.valueOf(mDateItem.getYear())));
+        mDate.setText(TextAndFontUtility.toPersianNumber(getString(R.string.date_placeholder,
+                getDayName(), mDateItem.getDay(), getMonthName())));
     }
 
     /**

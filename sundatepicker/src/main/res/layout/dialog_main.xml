@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog"
+    android:background="?attr/relativeLayoutBg"
     android:layoutDirection="ltr"
     tools:ignore="UnusedAttribute">
 
     <TextView
         android:id="@+id/year"
         style="@style/DialogTitle"
+        android:textColor="?attr/titleTextColor"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="8dp"
@@ -21,6 +22,7 @@
     <TextView
         android:id="@+id/date"
         style="@style/DialogTitle"
+        android:textColor="?attr/titleTextColor"
         android:layout_below="@id/year"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -32,7 +34,9 @@
 
     <TextView
         android:id="@+id/cancel"
-        style="@style/SecondaryButtonStyle"
+        style="@style/Base.Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:textColor="?attr/titleTextColor"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

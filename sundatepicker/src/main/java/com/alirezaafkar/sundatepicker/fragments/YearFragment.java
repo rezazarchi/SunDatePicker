@@ -1,6 +1,7 @@
 package com.alirezaafkar.sundatepicker.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,16 +14,19 @@ import android.view.ViewGroup;
 import com.alirezaafkar.sundatepicker.interfaces.DateInterface;
 import com.alirezaafkar.sundatepicker.R;
 import com.alirezaafkar.sundatepicker.adapters.YearAdapter;
+import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 /**
  * Created by Alireza Afkar on 2/5/16 AD.
  */
 public class YearFragment extends Fragment {
     private DateInterface mCallback;
+    private Typeface typeface;
 
-    public static YearFragment newInstance(DateInterface callback) {
+    public static YearFragment newInstance(DateInterface callback, Typeface typeface) {
         YearFragment fragment = new YearFragment();
         fragment.mCallback = callback;
+        fragment.typeface = typeface;
         return fragment;
     }
 
@@ -40,6 +44,7 @@ public class YearFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextAndFontUtility.setFonts(view, typeface);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         YearAdapter adapter = new YearAdapter(mCallback, getYears());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

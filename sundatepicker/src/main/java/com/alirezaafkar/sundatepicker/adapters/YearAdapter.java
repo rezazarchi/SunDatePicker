@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.alirezaafkar.sundatepicker.R;
 import com.alirezaafkar.sundatepicker.components.SquareTextView;
 import com.alirezaafkar.sundatepicker.interfaces.DateInterface;
+import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 /**
  * Created by Alireza Afkar on 2/11/16 AD.
@@ -50,7 +51,7 @@ public class YearAdapter extends RecyclerView.Adapter<YearAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull YearAdapter.ViewHolder holder, int position) {
-        holder.mTextView.setText(String.valueOf(mYears[position]));
+        holder.mTextView.setText(TextAndFontUtility.toPersianNumber(String.valueOf(mYears[position])));
         holder.mTextView.setSelected(isSelected(position));
         holder.mTextView.setChecked(isThisYear(position));
     }

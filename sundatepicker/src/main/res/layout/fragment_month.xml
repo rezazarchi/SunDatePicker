@@ -33,7 +33,7 @@
         android:layout_toRightOf="@id/next"
         android:gravity="center"
         android:padding="@dimen/title_padding"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?attr/titleTextColor"
         tools:text="خرداد" />
 
     <com.alirezaafkar.sundatepicker.components.SquareImageView

@@ -1,6 +1,7 @@
 package com.alirezaafkar.sundatepicker.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,11 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alirezaafkar.sundatepicker.R;
 import com.alirezaafkar.sundatepicker.adapters.MonthAdapter;
 import com.alirezaafkar.sundatepicker.interfaces.DateInterface;
+import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 import java.util.Locale;
 
@@ -28,10 +31,12 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
     private ViewPager mPager;
     private PagerAdapter mAdapter;
     private DateInterface mCallback;
+    private Typeface typeface;
 
-    public static MonthFragment newInstance(DateInterface callback) {
+    public static MonthFragment newInstance(DateInterface callback, Typeface typeface) {
         MonthFragment fragment = new MonthFragment();
         fragment.mCallback = callback;
+        fragment.typeface = typeface;
         return fragment;
     }
 
@@ -63,6 +68,7 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextAndFontUtility.setFonts(view, typeface);
         mPager = view.findViewById(R.id.pager);
         mTitle = view.findViewById(R.id.title);
         view.findViewById(R.id.next).setOnClickListener(this);
@@ -77,16 +83,16 @@ public class MonthFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onPageSelected(int month) {
                 super.onPageSelected(month);
-                mTitle.setText(String.format(Locale.US, "%s %d",
+                mTitle.setText(TextAndFontUtility.toPersianNumber(String.format(Locale.US, "%s %d",
                         mAdapter.getPageTitle(month),
-                        year));
+                        year)));
             }
         });
         mPager.setCurrentItem(chosenMonth);
         if (chosenMonth == 0) {
-            mTitle.setText(String.format(Locale.US, "%s %d",
+            mTitle.setText(TextAndFontUtility.toPersianNumber(String.format(Locale.US, "%s %d",
                     mAdapter.getPageTitle(0),
-                    year));
+                    year)));
         }
     }
 
