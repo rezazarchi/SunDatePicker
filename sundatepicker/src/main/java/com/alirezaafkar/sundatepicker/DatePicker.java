@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.alirezaafkar.sundatepicker.components.DateItem;
@@ -27,7 +26,6 @@ import com.alirezaafkar.sundatepicker.utils.TextAndFontUtility;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import static com.alirezaafkar.sundatepicker.utils.TextAndFontUtility.setFonts;
 
@@ -60,6 +58,7 @@ public class DatePicker extends DialogFragment
         private DateItem dateItem;
         private boolean retainInstance;
         private Typeface typeFace;
+        private long currentDate = -1;
 
         public Builder() {
             dateItem = new DateItem();
@@ -68,6 +67,11 @@ public class DatePicker extends DialogFragment
 
         public Builder id(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder currentDate(long currentDate) {
+            this.currentDate = currentDate;
             return this;
         }
 
@@ -207,6 +211,8 @@ public class DatePicker extends DialogFragment
         mDate.setOnClickListener(this);
         mToday.setOnClickListener(this);
         view.findViewById(R.id.done).setOnClickListener(this);
+        if (mBuilder.currentDate != -1)
+            ((TextView) view.findViewById(R.id.cancel)).setText(getString(R.string.clear_btn));
         view.findViewById(R.id.cancel).setOnClickListener(this);
         setFonts(view, mBuilder.typeFace);
         return view;
@@ -227,6 +233,14 @@ public class DatePicker extends DialogFragment
             }
             dismiss();
         } else if (v.getId() == R.id.cancel) {
+            if (mBuilder.currentDate != -1) {
+                if (mCallBack != null) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(-1);
+                    mCallBack.onDateSet(mBuilder.id, calendar,
+                            -1,-1, -1);
+                }
+            }
             dismiss();
         }
     }
